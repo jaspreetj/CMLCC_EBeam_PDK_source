@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<foundry_data>
+    <foundry_name>EBeam</foundry_name>
+    <version_suffix>0.00.00</version_suffix>
+    <process_prefix>ebeam_</process_prefix>
+    <element_list>
+        <element>
+            <name>cband_te_y_branch</name>
+            <parameter_fileformat>lsf</parameter_fileformat>
+        </element>
+    </element_list>
+    <statistical_data>
+        <statistical_parameter_status>open</statistical_parameter_status>
+        <nominal_value_type>mode</nominal_value_type>
+        <GLOBALGROUP_list>
+            <GLOBALGROUP>
+                <name>global_width</name>
+                <distribution>normal</distribution>
+                <sigma>10</sigma>
+            </GLOBALGROUP>
+            <GLOBALGROUP>
+                <name>global_thickness</name>
+                <distribution>normal</distribution>
+                <sigma>5</sigma>
+            </GLOBALGROUP>
+        </GLOBALGROUP_list>
+        <CORRGROUP_list>
+            <CORRGROUP>
+                <name>corr_width</name>
+                <correlation_length>3e-3</correlation_length>
+            </CORRGROUP>
+            <CORRGROUP>
+                <name>corr_thickness</name>
+                <correlation_length>1e-2</correlation_length>
+            </CORRGROUP>
+        </CORRGROUP_list>
+        <corner_list>
+            <corner>corner_1</corner>
+            <corner>corner_2</corner>
+        </corner_list>
+    </statistical_data>
+</foundry_data>
