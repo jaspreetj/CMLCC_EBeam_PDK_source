@@ -1,0 +1,129 @@
+##################################################################
+
+# Copyright (c) 2003-2020, Ansys, Inc. All rights reserved.  
+
+# Unauthorized use, distribution, or duplication is prohibited.  
+# This product is subject to U.S. laws governing export and re-export.  
+
+# For full Legal Notice, see documentation.
+
+##################################################################
+
+### PORT DEFINITION ###
+# Notes: We strongly recommend using the following port names.
+
+ports = cell(3);
+p = struct; p.name = "port_1";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Left";   p.loc = 0.5; ports{1} = p;
+p = struct; p.name = "port_2";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Right";   p.loc = 0.25; ports{2} = p;
+p = struct; p.name = "port_3";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Right";  p.loc = 0.75; ports{3} = p;
+
+### FOUNDRY DATA ###
+spar_filename = "cband_te_y_branch_s_params.txt"; #S-parameter for y-branch (this file does not have temperature-dependent data)
+                                                # 1st parameter data column: delta_thickness
+                                                # 2nd parameter data column: delta_width
+
+### STATISTICAL PARAMETERS ###
+# Notes:
+# (1) IMPORTANT: The order of the parameters in the cell array must match the order of the data columns in the S-parameter sweep file.
+# (2) The information for each parameter must be added as a structure with the fields that describe it for Monte Carlo analysis.
+
+
+stat_parameters = cell(2);
+par = struct;
+par.name = "thickness";
+par.mean = 220;
+par.LOCAL = struct;
+par.LOCAL.distribution = "normal";
+par.LOCAL.sigma = 5;
+par.GLOBAL = struct;
+par.GLOBAL.distribution = "normal";
+par.GLOBAL.sigma = 5;
+par.corners = [210,230];
+stat_parameters{1} = par;
+par = struct;
+par.name = "width";
+par.mean = 500;
+par.LOCAL = struct;
+par.LOCAL.distribution = "normal";
+par.LOCAL.sigma = 10;
+par.GLOBAL = struct;
+par.GLOBAL.distribution = "normal";
+par.GLOBAL.sigma = 10;
+par.corners = [480,520];
+stat_parameters{2} = par;
+
+### OTHER PROPERTIES ###
+
+# General
+photonic_model = "sparsweep_pcell"; # Photonic model used in the element.
+description = "SiEPIC EBeam element: TE C-band Y branch";	# Please give a brief description, e.g., "Grating coupler for TE mode"
+prefix = "ebeam_cband_te_y_branch";
+
+# CML/notes		# Feel free to add notes as you see fit
+# Warning: Do not use as property the name of an existing parameter
+notes = cell(3);
+notes{1} = struct;
+notes{1}.property = "Pcell";
+notes{1}.value = "This is a parameterized model based on S-parameters.";
+notes{2} = struct;
+notes{2}.property = "wavelength_range";
+notes{2}.value = "C-band (1500 - 1600 nm)"; #should be consistent with data available in txt file
+notes{3} = struct; 		# Please follow the same syntax as note_1
+notes{3}.property = "polarization";
+notes{3}.value = "TE and TM";
+
+# Fixed internal properties (end user cannot see)
+mode_no = 2;		# This model supports 2 modes. 
+mode_ID = [1, 2];		# The mode IDs must be consistent across your CML	
+mode_label = cell(mode_no);
+mode_label{1} = 'TE';
+mode_label{2} = 'TM';   
+
+##################################################################
+
+### ADVANCED SETTINGS ###
+digital_filter_type = 'FIR';  # 'FIR' filter type should be used where phase information is important
+                              # 'IIR' can be used in cases where phase is not important but transmission is freqeuncy dependent
+number_of_taps_estimation = "fit tolerance";
+fir_taps = 64; # Number of taps for finite impulse response filter. 
+                # Larger number allows to resolve frequency dependence better but increases time delay.
+                # Suggestion: set to ~64 for devices where dispersive properties are important
+                # set to ~1 for devices that will be used in circuits where time delays are a concern 
+iir_taps = 4; # Number of taps for infinite impulse response filter. 
+                # For most cases the default number of taps (4) is sufficient.  In some cases it might be necessary to use a larger value 
+passivity_enforcement = "ignore";
+reciprocity_enforcement = "ignore";
+        
+# Testing parameters
+N_test = 1; # number of random tests, each parameter will be random.
+
+test_all_combo = true; # when true, tests are run over all combinations of choices for the ComboChoice and Logical parameters
+                       # when false, Combochoice values are randomly sampled over
+reference_data_available = true; # when false, reference data is generated. Only need to do this once.
+
+power_tolerance_dB = 1e-6; #dB
+S_tolerance = 1e-5; # dimensionless looks at |S-S_ref| in absolute terms, phase will matter!
+reciprocity_tolerance = 1e-2; # dimensionless
+passivity_tolerance = 5e-3; # dimensionless
+S_time_tolerance = 0.2; # time domain difference with frequency domain over middle bandwidth
+time_domain_test = true;
+
+test_ranges = cell(1);		# Define wavelength ranges to test over
+
+test_params = struct;
+test_params.wavelength_start = 1530e-9;
+test_params.wavelength_stop = 1560e-9;
+test_params.number_of_points = 1000; # if number_of_points = 1 then wavelength_start is the wavelength tested
+test_ranges{1} = test_params;
+
+# Statistical QA settings
+# Monte Carlo simulation of abs(transmission)^2 from input to output ports at the wavelength specified below. 
+enable_stat_qa = true;
+stat_reference_data_available = true; # when false, reference data is generated. Only need to do this once.
+N_trials = 50; # number of trials in Monte Carlo sweep
+
+stat_qa_input_port = 1; # input port for Monte Carlo simulation test
+stat_qa_output_port = 2; # output port for Monte Carlo simulation test
+stat_qa_wavelength = 1550e-9; # wavelength for Monte Carlo simulation test
+
+stat_transmission_tolerance = 0.001; # Unitless. Tolerance is for abs(transmission)^2. 

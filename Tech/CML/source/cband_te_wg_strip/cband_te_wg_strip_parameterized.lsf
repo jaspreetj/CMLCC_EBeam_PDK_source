@@ -1,0 +1,183 @@
+##################################################################
+
+# Copyright (c) 2003-2020, Ansys, Inc. All rights reserved.  
+
+# Unauthorized use, distribution, or duplication is prohibited.  
+# This product is subject to U.S. laws governing export and re-export.  
+
+# For full Legal Notice, see documentation.
+
+##################################################################
+
+# Load data from file (see documentation for description):
+
+data_filename = "wg_stat_strip_straight_parameterized.json";    # must include the file extension (.mat or .json). 
+
+    # identify file type
+    datafile_extension = splitstring(data_filename,".");
+    temp = length(datafile_extension);
+    datafile_extension = datafile_extension{temp};
+    
+    #load data
+    if(datafile_extension=="mat"){
+    matlabload(source_directory +"/" + data_filename);
+    }
+    
+    else{
+    jsonload(source_directory +"/" + data_filename);
+    }
+
+# Port names: We strongly recommend using the following port names.
+ports = cell(2);
+p = struct; p.name = "opt_1";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Left"; p.loc = 0.5; ports{1} = p;
+p = struct; p.name = "opt_2";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Right"; p.loc = 0.5; ports{2} = p;
+
+opt_1_RELAY = 1; # Optical input/output 1
+opt_2_RELAY = 2; # Optical input/output 2
+
+# Properties
+
+# General
+description = "Foundry parameterized waveguide, C-band & O-band, supports TE and TM mode";	# Please give a brief description, e.g., "Strip Waveguide - Supporting TE & TM modes"
+prefix = "WG";
+photonic_model = "wg_parameterized"; # Photonic model used in the element.
+# CML - list all properties that are used to parameterized neff, ng, D, loss
+parameters = cell(2);
+
+par = struct; 
+par.name = "width";
+par.category = "CML";
+par.kind = "Distance";
+par.unit = "um";
+par.annotate = true;
+par.default_value = width;
+par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
+par.min = width_min;
+par.max = width_max;
+par.expression = ""; # leave blank if the values stored in par.value matches the user-inputted values, define if the values stored in par.value differ from the user-inputted values (eg. curvature = 1/radius)
+par.value = width_data;
+parameters{1} = par;
+
+par = struct; 
+par.name = "temperature";
+par.category = "Thermal";
+par.kind = "Temperature";
+par.unit = "K";
+par.annotate = false;
+par.default_value = "%temperature%";
+par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
+par.min = 0;
+par.max = 10000;
+par.test_min = 0; # change test_min and test_max to reduce the range of values used during QA tests
+par.test_max = 500;
+par.expression = ""; # leave blank if the values stored in par.value matches the user-inputted values, define if the values stored in par.value differ from the user-inputted values (eg. curvature = 1/radius)
+par.value = temperature_data;
+parameters{2} = par;
+
+length_props = cell(1); #the length_props cell stores information about parameters which DONT affect (neff, ng, D, loss) in structs
+
+lp = struct;
+lp.name = "wg_length";
+lp.category = "CML";
+lp.kind = "Distance";
+lp.unit = "um";
+lp.annotate = true;
+lp.default_value = wg_length;
+lp.min = wg_length_min;
+lp.max = wg_length_max;
+lp.visible_to_user = true; # if not, the default value will be used
+lp.test_min = 0.5e-6; # change test_min and test_max to reduce the range of values used during QA tests
+lp.test_max = 500e-6;
+length_props{1} = lp;
+
+# waveguide length definitions
+length_formula = "";  
+length_formula_veriloga = ""; 
+# length_formula :          Define INTERCONNECT model length formula as a function of other properties listed above.
+#                           Leave blank if wg_length is a property already.         
+#          
+# length_formula_veriloga : Define Verilog-A model length formula as a function of other properties listed above.
+#                           This part of the code must be written in veriloga syntax, and all the mathmatical operations 
+#                           must be performed within veriloga 'analog initial' block. Variables must be declared, 
+#                           and final result must be assigned to 'wg_length', which must be declared by 'real wg_length;'. 
+#                           Please make sure this part of the code has been tested in Virtuoso veriloga environment and has no sytax error.
+#                           Leave blank if 'wg_length' is a property already
+
+# CML/notes		# Feel free to add notes as you see fit 
+notes = cell(1);
+notes{1} = struct;
+notes{1}.property = "wavelength_range";
+notes{1}.value = "L-band, C-band & O-band";
+
+# notes{2} = struct; 		# Please follow the same syntax as notes{1}
+
+# Time domain settings 
+tap_estimation = 0; # Options: 0 [recommended] or 2
+# tap_estimation: This is a digital filter setting that affects the time domain model. The frequency domain model is unaffected.
+# 0 : The time domain model will attempt to capture the following frequency dependence of the propagation constant, beta, and the loss
+#        beta(f) = 2*pi*neff(f0)*f0/c + 2*pi*ng(f0)/c*(f-f0)
+#        loss(f) = loss(f0)
+#     where f is the frequency, f0 is the center frequency of the simulation. 
+#     The propagation constant and loss will be most accurate near f0 and will deviate the most at the edges of the
+#     simulation bandwidth. The accuracy will improve as the simulation sample rate is increased because the higher simulation bandwidth
+#     results in a smaller time step, dt. The accuracy will also improve for longer waveguides. In some cases, where the
+#     group delay of the specified waveguide length happens to be an exact multiple of dt, beta and loss (as described above) will be fully accurate across
+#     the entire simulated bandwidth.
+#     This is the recommended setting as it most accurately captures the most important effects of photonic waveguides
+#     in time domain simulation: the phase delay (neff), group delay (ng) and loss which are related to tuning, FSR, Q, IL and other 
+#     key parameters in many devices.
+# 2 : The time domain model will attempt to capture the frequency dependence of neff, ng, dispersion and loss exactly as they
+#     are calculated in a frequency domain simulation, over the entire simulated bandwidth. As a result, this may compromise
+#     the accuracy of neff and ng (including at the center frequency), and can result in undesirable effects such as amplification of
+#     the optical signal at some frequencies. This setting is therefore not recommended.
+#     For best results, a high simulation sample rate may be required. Also, the accuracy will improve for longer waveguides and
+#     this setting may be desired for ultra-long waveguides (in devices without feedback) where dispersion could be important.
+
+# Testing parameters
+Nr = 20;
+Nr_va = 3;      # optionally define this to override the number of random tests for Verilog-A
+rand_seed = 123456;
+relative_neff_tolerance = 0.001;
+relative_ng_tolerance = 0.002;
+relative_loss_tolerance = 1e-5;
+relative_D_tolerance = 0.005;
+relative_delay_time_tolerance = 0.05;
+
+test_bands = cell(3);
+band = struct;
+band.name = "L";
+band.wavelength_min = 1565e-9;
+band.wavelength_max = 1625e-9;
+test_bands{1} = band;
+band = struct;
+band.name = "C";
+band.wavelength_min = 1530e-9;
+band.wavelength_max = 1565e-9;
+test_bands{2} = band;
+band = struct;
+band.name = "O";
+band.wavelength_min = 1260e-9;
+band.wavelength_max = 1360e-9;
+test_bands{3} = band;
+
+# Single test
+test_single = true;
+length_props_test_val = cell(length(length_props));
+parameters_test_val = cell(length(parameters));
+length_props_test_val{1} = 200e-6;
+parameters_test_val{1} = 0.5e-6;
+parameters_test_val{2} = 300;
+m_test = 1; # mode index 
+wavelength_min_test = 1530e-9;
+wavelength_max_test = 1570e-9;
+
+# statistical qa settings
+stat_qa_mode_id = 1;
+stat_qa_band_id = 1;
+enable_stat_qa = true;  
+stat_reference_data_available = true;   # when false, reference data is generated. Only need to do this once.
+N_trials = 50;   # number of trials in Monte Carlo sweep
+stat_neff_tolerance = 0.001;
+stat_ng_tolerance = 0.001;
+stat_D_tolerance = 0.001;
+stat_loss_tolerance = .1;  # unit of dB/m
