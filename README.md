@@ -1,2 +1,2 @@
 # EBeam_CMLCC_PDK
-CML compiler compatible source for EBeam PDK
+Source data for the CML compatible EBeam PDK
