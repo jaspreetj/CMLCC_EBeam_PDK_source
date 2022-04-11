@@ -5,6 +5,10 @@
     <process_prefix>ebeam_</process_prefix>
     <element_list>
         <element>
+            <name>cband_te_wg_strip</name>
+            <parameter_fileformat>lsf</parameter_fileformat>
+        </element>
+        <element>
             <name>cband_te_y_branch</name>
             <parameter_fileformat>lsf</parameter_fileformat>
         </element>
@@ -16,12 +20,12 @@
             <GLOBALGROUP>
                 <name>global_width</name>
                 <distribution>normal</distribution>
-                <sigma>10</sigma>
+                <sigma>10e-9</sigma>
             </GLOBALGROUP>
             <GLOBALGROUP>
                 <name>global_thickness</name>
                 <distribution>normal</distribution>
-                <sigma>5</sigma>
+                <sigma>5e-9</sigma>
             </GLOBALGROUP>
         </GLOBALGROUP_list>
         <CORRGROUP_list>
