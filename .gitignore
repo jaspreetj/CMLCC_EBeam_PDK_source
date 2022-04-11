@@ -1,7 +1,9 @@
 # Ansys Lumerical CML post-compilation folders and files
 *.state
 Tech/CML/artifacts/
-
+*.orig
+*INTC_test.lsf
+*QA
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

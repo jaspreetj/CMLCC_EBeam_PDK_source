@@ -38,7 +38,7 @@ opt_2_RELAY = 2; # Optical input/output 2
 # Properties
 
 # General
-description = "Foundry parameterized waveguide, C-band & O-band, supports TE and TM mode";	# Please give a brief description, e.g., "Strip Waveguide - Supporting TE & TM modes"
+description = "Foundry parameterized strip waveguide, C-band, supports TE and TM mode";	# Please give a brief description, e.g., "Strip Waveguide - Supporting TE & TM modes"
 prefix = "WG";
 photonic_model = "wg_parameterized"; # Photonic model used in the element.
 # CML - list all properties that are used to parameterized neff, ng, D, loss
@@ -107,7 +107,7 @@ length_formula_veriloga = "";
 notes = cell(1);
 notes{1} = struct;
 notes{1}.property = "wavelength_range";
-notes{1}.value = "L-band, C-band & O-band";
+notes{1}.value = "C-band";
 
 # notes{2} = struct; 		# Please follow the same syntax as notes{1}
 
@@ -143,22 +143,13 @@ relative_loss_tolerance = 1e-5;
 relative_D_tolerance = 0.005;
 relative_delay_time_tolerance = 0.05;
 
-test_bands = cell(3);
-band = struct;
-band.name = "L";
-band.wavelength_min = 1565e-9;
-band.wavelength_max = 1625e-9;
-test_bands{1} = band;
+test_bands = cell(1);
 band = struct;
 band.name = "C";
 band.wavelength_min = 1530e-9;
 band.wavelength_max = 1565e-9;
-test_bands{2} = band;
-band = struct;
-band.name = "O";
-band.wavelength_min = 1260e-9;
-band.wavelength_max = 1360e-9;
-test_bands{3} = band;
+test_bands{1} = band;
+
 
 # Single test
 test_single = true;
