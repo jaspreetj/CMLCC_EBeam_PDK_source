@@ -11,7 +11,7 @@
 
 # Load data from file (see documentation for description):
 
-data_filename = "wg_stat_strip_straight_parameterized.json";    # must include the file extension (.mat or .json). 
+data_filename = "cband_te_wg_strip.json";    # must include the file extension (.mat or .json). 
 
     # identify file type
     datafile_extension = splitstring(data_filename,".");

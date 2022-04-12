@@ -112,15 +112,15 @@
     "_size" : [ 1, 52, 1, 2 ],
     "_type" : "matrix"
   },
-  "internal_lum_script_48847i" : 
+  "internal_lum_script_49607i" : 
   {
     "_data" : 
     [
-      "C:\\Users\\seanl\\Documents\\01_UBC\\Academics\\Grad School\\01_Work\\CML Compiler\\Repo\\CMLCC_EBeam_PDK_source\\Tech\\CML\\source\\cband_te_wg_strip\\cband_te_wg_strip_parameterized.json"
+      "C:\\Users\\seanl\\Documents\\01_UBC\\Academics\\Grad School\\01_Work\\CML Compiler\\Repo\\CMLCC_EBeam_PDK_source\\Tech\\CML\\source\\cband_te_wg_strip\\cband_te_wg_strip.json"
     ],
     "_type" : "cell"
   },
-  "internal_lum_script_48847o" : 
+  "internal_lum_script_49607o" : 
   {
     "_data" : [ 0.0, 0.0, 0.0 ],
     "_type" : "cell"
@@ -484,33 +484,45 @@
     "_data" : 
     [
       {
+        "LOCAL" : 
+        {
+          "CORRGROUP" : "corr_thickness",
+          "distribution" : "normal",
+          "sigma" : 4.0000000000000002e-09
+        },
         "mean" : 0.0,
         "name" : "width",
         "normalization_factor" : 4.9999999999999998e-07,
         "use_parameter_data" : "width"
       },
       {
+        "LOCAL" : 
+        {
+          "CORRGROUP" : "corr_width",
+          "distribution" : "normal",
+          "sigma" : 2.0000000000000001e-09
+        },
         "mean" : 0.0,
         "name" : "thickness",
         "slope_D" : 
         {
           "_complex" : false,
           "_data" : [ 12511.871250000058, 208250.72115384723 ],
-          "_size" : [ 2, 1 ],
+          "_size" : [ 1, 2 ],
           "_type" : "matrix"
         },
         "slope_neff" : 
         {
           "_complex" : false,
           "_data" : [ 3456403.8461538549, 7858750.0000000307 ],
-          "_size" : [ 2, 1 ],
+          "_size" : [ 1, 2 ],
           "_type" : "matrix"
         },
         "slope_ng" : 
         {
           "_complex" : false,
           "_data" : [ 1124990.3846153824, 23514596.153846245 ],
-          "_size" : [ 2, 1 ],
+          "_size" : [ 1, 2 ],
           "_type" : "matrix"
         }
       }

@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
 <foundry_data>
-    <foundry_name>EBeam</foundry_name>
+    <foundry_name>EBeam_CMLC</foundry_name>
     <version_suffix>0.00.00</version_suffix>
     <process_prefix>ebeam_</process_prefix>
     <element_list>
         <element>
-            <name>cband_te_wg_strip_parameterized</name>
+            <name>cband_te_wg_strip</name>
             <parameter_fileformat>lsf</parameter_fileformat>
         </element>
         <element>
