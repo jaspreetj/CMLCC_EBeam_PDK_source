@@ -112,7 +112,7 @@
     "_size" : [ 1, 52, 1, 2 ],
     "_type" : "matrix"
   },
-  "internal_lum_script_49607i" : 
+  "internal_lum_script_26467i" : 
   {
     "_data" : 
     [
@@ -120,7 +120,7 @@
     ],
     "_type" : "cell"
   },
-  "internal_lum_script_49607o" : 
+  "internal_lum_script_26467o" : 
   {
     "_data" : [ 0.0, 0.0, 0.0 ],
     "_type" : "cell"
@@ -488,7 +488,7 @@
         {
           "CORRGROUP" : "corr_thickness",
           "distribution" : "normal",
-          "sigma" : 4.0000000000000002e-09
+          "sigma" : 5.8500000000000005e-10
         },
         "mean" : 0.0,
         "name" : "width",
@@ -500,7 +500,7 @@
         {
           "CORRGROUP" : "corr_width",
           "distribution" : "normal",
-          "sigma" : 2.0000000000000001e-09
+          "sigma" : 1.132e-09
         },
         "mean" : 0.0,
         "name" : "thickness",
