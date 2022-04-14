@@ -36,11 +36,11 @@
         <CORRGROUP_list>
             <CORRGROUP>
                 <name>corr_width</name>
-                <correlation_length>3e-3</correlation_length>
+                <correlation_length>12.23e-9</correlation_length>
             </CORRGROUP>
             <CORRGROUP>
                 <name>corr_thickness</name>
-                <correlation_length>1e-2</correlation_length>
+                <correlation_length>8.72e-9</correlation_length>
             </CORRGROUP>
         </CORRGROUP_list>
         <corner_list>
