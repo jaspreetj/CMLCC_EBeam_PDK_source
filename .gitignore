@@ -3,7 +3,9 @@
 Tech/CML/artifacts/
 *.orig
 *INTC_test.lsf
+*INTC_custom_test.lsf
 *QA
+*.ich
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

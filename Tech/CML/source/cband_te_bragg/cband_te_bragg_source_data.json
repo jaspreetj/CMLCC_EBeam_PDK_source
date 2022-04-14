@@ -1,0 +1,30 @@
+
+{
+  "width" : 0.5e-6,
+  "stat_parameters" : 
+  {
+    "_data" : 
+    [
+      
+      {
+        "LOCAL" : 
+        {
+          "distribution" : "normal",
+          "sigma" : 1,
+          "CORRGROUP" : "corr_delta_width"
+        },
+        "corners" : 
+        {
+          "_complex" : false,
+          "_data" : [ -2.4, 2.4 ],
+          "_size" : [ 2, 1 ],
+          "_type" : "matrix"
+        },
+        "mean" : 0,
+        "name" : "delta_width",
+        "slope_width" : 0.03e-6
+      }
+    ],
+    "_type" : "cell"
+  }
+}

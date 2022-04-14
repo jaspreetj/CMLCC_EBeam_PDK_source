@@ -12,6 +12,11 @@
             <name>cband_te_y_branch</name>
             <parameter_fileformat>lsf</parameter_fileformat>
         </element>
+        <element>
+            <name>cband_te_bragg</name>
+            <parameter_fileformat>lsf</parameter_fileformat>
+        </element>
+        
     </element_list>
     <statistical_data>
         <statistical_parameter_status>open</statistical_parameter_status>

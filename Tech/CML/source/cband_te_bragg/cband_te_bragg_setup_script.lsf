@@ -1,0 +1,57 @@
+##################################################################
+
+# Copyright (c) 2003-2020, Ansys, Inc. All rights reserved.  
+
+# Unauthorized use, distribution, or duplication is prohibited.  
+# This product is subject to U.S. laws governing export and re-export.  
+
+# For full Legal Notice, see documentation.
+
+##################################################################
+
+# In this example:
+#    - Add the desired string for set-up script to the variable "setup_script"
+#    - Use command "toscript" to add data required for setup to string 
+setup_script ="
+    ## parameter set-up
+    #radius_name='radius';
+    #eval('radius = %' + radius_name + '%;'); 
+    #ps_length=getnamed('ps','wg_length');
+    #setnamed('wg','wg_length',((radius*pi*2)-ps_length));
+    temp = round(number_of_periods);
+    if (almostequal(number_of_periods,temp)!=1)
+    {
+        msg = name + ': number_of_periods is not an integer. The model will round the number to the nearest integer: ' + num2str(temp) + '.';
+        message(msg);
+        number_of_periods = temp;
+    }
+    if (sinusoidal==0) {
+        ? bragg_wavelength = (1550e-9 + (grating_period-317e-9)/317e-9*ne1/ng1*1550e-9) * ne1/ne1_0 - 1.9e2 * corrugation_width^2 - 0.0259 * corrugation_width - 1.0e-9; 
+        kappa =  -1.53519e19 * corrugation_width^2+ 2.2751e12 * corrugation_width;
+        ? kappa = kappa * cos(misalignment/grating_period*pi);
+    } else {   
+        bragg_wavelength = (1550e-9 + (grating_period-317e-9)/317e-9*ne1/ng1*1550e-9) * ne1/ne1_0 - 6.7549e5 * corrugation_width^2 - 0.0399 * corrugation_width +  0.2e-9; 
+        kappa = -3.7465e18 * corrugation_width^2+ 1.5555e12 * corrugation_width;  
+        ? kappa = kappa * cos(misalignment/grating_period*pi);
+    }
+    ?grating_length = grating_period * number_of_periods;
+    setnamed('WBG_1', 'frequency', c/bragg_wavelength);
+    setnamed('WBG_1', 'grating coupling coefficient', kappa);
+    setnamed('WBG_1', 'length', grating_length);
+    setnamed('WBG_1', 'loss 1', 590);
+    setnamed('WBG_1', 'group index 1', ng1);
+    setnamed('WBG_1', 'facet phase right 1', -pi/4);
+    setnamed('WBG_1', 'facet phase left 1', pi/4);
+    setresult('BraggWavelength', bragg_wavelength);
+    setresult('kappa', kappa);
+";
+setup_script=setup_script+toscript(stat_parameters)+toscript(width);
+
+setup_script=setup_script+"
+    width = width + delta_width*stat_parameters{1}.slope_width;
+    setnamed('wg', 'width', width);
+";
+
+
+
+    

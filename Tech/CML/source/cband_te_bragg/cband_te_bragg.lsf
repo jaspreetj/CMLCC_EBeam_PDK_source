@@ -1,0 +1,115 @@
+##################################################################
+
+# Copyright (c) 2003-2020, Ansys, Inc. All rights reserved.  
+
+# Unauthorized use, distribution, or duplication is prohibited.  
+# This product is subject to U.S. laws governing export and re-export.  
+
+# For full Legal Notice, see documentation.
+
+##################################################################
+
+# General
+description = "Bragg Grating, C-band, supports TE mode";	# Please give a brief description, e.g., "Strip Waveguide - Supporting TE & TM modes"
+prefix = "ebeam_cband_te_bragg";
+photonic_model = "compound_element"; # Photonic model used in the element.
+
+# Load data from file (optional)
+jsonload(source_directory + "/cband_te_bragg_source_data.json");
+
+# CML - list all properties that are used to parameterize the model (optional)
+# parameters = cell(5);
+
+## TODO: Delete parameters since these are defined in the icp file
+# par = struct;
+# par.name = "grating_period"; 
+# par.category = "Bragg";
+# par.type = "Number";
+# par.kind = "Distance";
+# par.unit = "um";
+# par.annotate = true;
+# par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
+# par.default_value = 0.317;
+# par.min = 0.001;
+# par.max = 1000;
+# parameters{1} = par;
+
+# par = struct;
+# par.name = "misalignment"; 
+# par.category = "Bragg";
+# par.type = "Number";
+# par.kind = "Distance";
+# par.unit = "um";
+# par.annotate = true;
+# par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
+# par.default_value = 0;
+# par.min = -1000;
+# par.max = 1000;
+# parameters{2} = par;
+
+# par = struct;
+# par.name = "number_of_periods"; 
+# par.category = "Bragg";
+# par.type = "Number";
+# par.kind = "NonQuantity";
+# # par.unit = "um";
+# par.annotate = true;
+# par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
+# par.default_value = 100;
+# par.min = 1;
+# par.max = 1000000000;
+# parameters{3} = par;
+
+# par = struct;
+# par.name = "sinusoidal"; 
+# par.category = "Bragg";
+# par.type = "Logical";
+# par.kind = "NonQuantity";
+# # par.unit = "um";
+# par.annotate = true;
+# par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
+# par.default_value = true;
+# # par.min = 0.001;
+# # par.max = 1000;
+# parameters{4} = par;
+
+# par = struct;
+# par.name = "corrugation_width"; 
+# par.category = "Bragg";
+# par.type = "Number";
+# par.kind = "Distance";
+# par.unit = "um";
+# par.annotate = true;
+# par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
+# par.default_value = 0.04;
+# par.min = 0.001;
+# par.max = 1000;
+# parameters{5} = par;
+
+# Set-up script: create the string "setup_script" to be loaded into the Compound Element Setup Script (optional)
+# "setup_script" string can either be defined in this file or imported from another file.
+# To import the string from another file, use command "feval".
+# The set-up script must be self-contained: 
+#    - All required data for the model must be included in the string
+#    - It can reference user-defined parameters and statistical parameters (see "parameters" cell above and "stat_parameters" cell in the json data file) 
+
+setup_script_file="cband_te_bragg_setup_script.lsf";
+feval(source_directory+"/"+setup_script_file);
+
+# CML/notes	(optional)	# Feel free to add notes as you see fit 
+notes = cell(2);
+notes{1} = struct;
+notes{1}.property = "wavelength_range";
+notes{1}.value = "C-band";
+notes{2} = struct;
+notes{2}.property = "polarizations";
+notes{2}.value = "TE mode";
+
+# Custom QA (optional)
+custom_qa_filenames = cell(1); 
+custom_qa_filenames{1} = "cband_te_bragg_custom_qa.lsf";
+
+
+# Determine where to get the compound information
+get_compound="file"; # "script" or "file" 
+debug_mode=false;
