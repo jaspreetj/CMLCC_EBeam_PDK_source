@@ -20,26 +20,26 @@
     </element_list>
     <statistical_data>
         <statistical_parameter_status>open</statistical_parameter_status>
-        <nominal_value_type>mode</nominal_value_type>
+        <nominal_value_type>mean</nominal_value_type>
         <GLOBALGROUP_list>
             <GLOBALGROUP>
-                <name>global_width</name>
-                <distribution>normal</distribution>
-                <sigma>10e-9</sigma>
-            </GLOBALGROUP>
-            <GLOBALGROUP>
-                <name>global_thickness</name>
+                <name>global_delta_width</name>
                 <distribution>normal</distribution>
                 <sigma>5e-9</sigma>
+            </GLOBALGROUP>
+            <GLOBALGROUP>
+                <name>global_delta_thickness</name>
+                <distribution>normal</distribution>
+                <sigma>3e-9</sigma>
             </GLOBALGROUP>
         </GLOBALGROUP_list>
         <CORRGROUP_list>
             <CORRGROUP>
-                <name>corr_width</name>
+                <name>corr_delta_width</name>
                 <correlation_length>12.23e-9</correlation_length>
             </CORRGROUP>
             <CORRGROUP>
-                <name>corr_thickness</name>
+                <name>corr_delta_thickness</name>
                 <correlation_length>8.72e-9</correlation_length>
             </CORRGROUP>
         </CORRGROUP_list>

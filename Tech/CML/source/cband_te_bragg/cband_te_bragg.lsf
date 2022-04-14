@@ -9,6 +9,11 @@
 
 ##################################################################
 
+# Port list
+ports = cell(2);	# number of external ports
+p = struct; p.name = "opt_1";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Left";   p.loc = 0.5; ports{1} = p;
+p = struct; p.name = "opt_2";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Right";  p.loc = 0.5; ports{2} = p;
+
 # General
 description = "Bragg Grating, C-band, supports TE mode";	# Please give a brief description, e.g., "Strip Waveguide - Supporting TE & TM modes"
 prefix = "ebeam_cband_te_bragg";
@@ -18,73 +23,73 @@ photonic_model = "compound_element"; # Photonic model used in the element.
 jsonload(source_directory + "/cband_te_bragg_source_data.json");
 
 # CML - list all properties that are used to parameterize the model (optional)
-# parameters = cell(5);
+parameters = cell(5);
 
-## TODO: Delete parameters since these are defined in the icp file
-# par = struct;
-# par.name = "grating_period"; 
-# par.category = "Bragg";
-# par.type = "Number";
-# par.kind = "Distance";
-# par.unit = "um";
-# par.annotate = true;
-# par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
-# par.default_value = 0.317;
-# par.min = 0.001;
-# par.max = 1000;
-# parameters{1} = par;
+## Keep parameters - using script file to generate
+ par = struct;
+ par.name = "grating_period"; 
+ par.category = "Bragg";
+ par.type = "Number";
+ par.kind = "Distance";
+ par.unit = "um";
+ par.annotate = true;
+ par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
+ par.default_value = 0.317e-6;
+ par.min = 0.001e-6;
+ par.max = 1000e-6;
+ parameters{1} = par;
 
-# par = struct;
-# par.name = "misalignment"; 
-# par.category = "Bragg";
-# par.type = "Number";
-# par.kind = "Distance";
-# par.unit = "um";
-# par.annotate = true;
-# par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
-# par.default_value = 0;
-# par.min = -1000;
-# par.max = 1000;
-# parameters{2} = par;
+ par = struct;
+ par.name = "misalignment"; 
+ par.category = "Bragg";
+ par.type = "Number";
+ par.kind = "Distance";
+ par.unit = "um";
+ par.annotate = true;
+ par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
+ par.default_value = 0;
+ par.min = -1000;
+ par.max = 1000;
+ parameters{2} = par;
 
-# par = struct;
-# par.name = "number_of_periods"; 
-# par.category = "Bragg";
-# par.type = "Number";
-# par.kind = "NonQuantity";
-# # par.unit = "um";
-# par.annotate = true;
-# par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
-# par.default_value = 100;
-# par.min = 1;
-# par.max = 1000000000;
-# parameters{3} = par;
+ par = struct;
+ par.name = "number_of_periods"; 
+ par.category = "Bragg";
+ par.type = "Number";
+ par.kind = "NonQuantity";
+  par.unit = "";
+ par.annotate = true;
+ par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
+ par.default_value = 100;
+ par.min = 1;
+ par.max = 1000000000;
+ parameters{3} = par;
 
-# par = struct;
-# par.name = "sinusoidal"; 
-# par.category = "Bragg";
-# par.type = "Logical";
-# par.kind = "NonQuantity";
-# # par.unit = "um";
-# par.annotate = true;
-# par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
-# par.default_value = true;
-# # par.min = 0.001;
-# # par.max = 1000;
-# parameters{4} = par;
+ par = struct;
+ par.name = "sinusoidal"; 
+ par.category = "Bragg";
+ par.type = "Logical";
+ par.kind = "NonQuantity";
+   par.unit = "";
+ par.annotate = true;
+ par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
+ par.default_value = true;
+  par.min = 0;
+ par.max = 1;
+ parameters{4} = par;
 
-# par = struct;
-# par.name = "corrugation_width"; 
-# par.category = "Bragg";
-# par.type = "Number";
-# par.kind = "Distance";
-# par.unit = "um";
-# par.annotate = true;
-# par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
-# par.default_value = 0.04;
-# par.min = 0.001;
-# par.max = 1000;
-# parameters{5} = par;
+ par = struct;
+ par.name = "corrugation_width"; 
+ par.category = "Bragg";
+ par.type = "Number";
+ par.kind = "Distance";
+ par.unit = "um";
+ par.annotate = true;
+ par.visible_to_user = true; # if invisible, this parameter's dimension in (neff, ng, D, loss) will be collapsed during CML construction, thus variance due to this parameter will not be included in the final model
+ par.default_value = 0.04e-6;
+ par.min = 0.001e-6;
+ par.max = 1000e-6;
+ parameters{5} = par;
 
 # Set-up script: create the string "setup_script" to be loaded into the Compound Element Setup Script (optional)
 # "setup_script" string can either be defined in this file or imported from another file.
@@ -106,10 +111,52 @@ notes{2}.property = "polarizations";
 notes{2}.value = "TE mode";
 
 # Custom QA (optional)
-custom_qa_filenames = cell(1); 
-custom_qa_filenames{1} = "cband_te_bragg_custom_qa.lsf";
+#custom_qa_filenames = cell(1); 
+#custom_qa_filenames{1} = "cband_te_bragg_custom_qa.lsf";
 
 
 # Determine where to get the compound information
-get_compound="file"; # "script" or "file" 
+get_compound="script" ; # "script" or "file" 
 debug_mode=false;
+
+
+# internal circuit
+elements=cell(1);
+
+elements{1}=struct;
+elements{1}.element="Bragg Grating";
+elements{1}.name="WBG_1";
+elements{1}.property=cell(6);
+elements{1}.property{1}=struct;
+elements{1}.property{1}.name="loss 1";
+elements{1}.property{1}.value=590;
+elements{1}.property{2}=struct;
+elements{1}.property{2}.name="group index 1";
+elements{1}.property{2}.value=4.19;
+elements{1}.property{3}=struct;
+elements{1}.property{3}.name="facet phase left 1";
+elements{1}.property{3}.value=pi/4;
+elements{1}.property{4}=struct;
+elements{1}.property{4}.name="facet phase right 1";
+elements{1}.property{4}.value=-pi/4;
+elements{1}.property{5}=struct;
+elements{1}.property{5}.name="coupling parameter";
+elements{1}.property{5}.value="coupling coefficient";
+elements{1}.property{6}=struct;
+elements{1}.property{6}.name="grating coupling coefficient";
+elements{1}.property{6}.value=56225.6;
+
+
+connection=cell(2);
+
+connection{1}=struct;
+connection{1}.e1_name="WBG_1";
+connection{1}.e1_port="port 1";
+connection{1}.e2_name="ebeam_cband_te_bragg";
+connection{1}.e2_port="opt_1";
+
+connection{2}=struct;
+connection{2}.e1_name="WBG_1";
+connection{2}.e1_port="port 2";
+connection{2}.e2_name="ebeam_cband_te_bragg";
+connection{2}.e2_port="opt_2";
