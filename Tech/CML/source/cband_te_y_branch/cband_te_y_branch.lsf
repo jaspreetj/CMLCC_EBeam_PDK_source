@@ -57,7 +57,7 @@ stat_parameters{2} = par;
 # General
 photonic_model = "sparsweep_pcell"; # Photonic model used in the element.
 description = "SiEPIC EBeam element: TE C-band Y branch";	# Please give a brief description, e.g., "Grating coupler for TE mode"
-prefix = "ebeam_cband_te_y_branch";
+prefix = "Y";
 
 # CML/notes		# Feel free to add notes as you see fit
 # Warning: Do not use as property the name of an existing parameter
