@@ -84,7 +84,7 @@ mode_label{2} = 'TM';
 ### ADVANCED SETTINGS ###
 digital_filter_type = 'FIR';  # 'FIR' filter type should be used where phase information is important
                               # 'IIR' can be used in cases where phase is not important but transmission is freqeuncy dependent
-number_of_taps_estimation = "fit tolerance";
+number_of_taps_estimation = "group delay";
 fir_taps = 64; # Number of taps for finite impulse response filter. 
                 # Larger number allows to resolve frequency dependence better but increases time delay.
                 # Suggestion: set to ~64 for devices where dispersive properties are important
@@ -99,7 +99,7 @@ N_test = 1; # number of random tests, each parameter will be random.
 
 test_all_combo = true; # when true, tests are run over all combinations of choices for the ComboChoice and Logical parameters
                        # when false, Combochoice values are randomly sampled over
-reference_data_available = true; # when false, reference data is generated. Only need to do this once.
+reference_data_available = false; # when false, reference data is generated. Only need to do this once.
 
 power_tolerance_dB = 1e-6; #dB
 S_tolerance = 1e-5; # dimensionless looks at |S-S_ref| in absolute terms, phase will matter!
@@ -119,7 +119,7 @@ test_ranges{1} = test_params;
 # Statistical QA settings
 # Monte Carlo simulation of abs(transmission)^2 from input to output ports at the wavelength specified below. 
 enable_stat_qa = true;
-stat_reference_data_available = true; # when false, reference data is generated. Only need to do this once.
+stat_reference_data_available = false; # when false, reference data is generated. Only need to do this once.
 N_trials = 50; # number of trials in Monte Carlo sweep
 
 stat_qa_input_port = 1; # input port for Monte Carlo simulation test
