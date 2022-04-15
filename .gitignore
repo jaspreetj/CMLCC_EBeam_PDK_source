@@ -1,5 +1,6 @@
 # Ansys Lumerical CML post-compilation folders and files
 *.state
+temp/
 Tech/CML/artifacts/
 *.orig
 *INTC_test.lsf
