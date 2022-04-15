@@ -34,22 +34,20 @@ par.name = "delta_thickness";
 par.mean = 0;
 par.LOCAL = struct;
 par.LOCAL.distribution = "normal";
-par.LOCAL.sigma = 5e-9;
+par.LOCAL.sigma = 5.85e-10;
 par.GLOBAL = struct;
 par.GLOBAL.distribution = "normal";
-par.GLOBAL.sigma = 5e-9;
-par.corners = [-10e-9,10e-9];
+par.GLOBAL.sigma = 3e-9;
 stat_parameters{1} = par;
 par = struct;
 par.name = "delta_width";
 par.mean = 0;
 par.LOCAL = struct;
 par.LOCAL.distribution = "normal";
-par.LOCAL.sigma = 10e-9;
+par.LOCAL.sigma = 1.132e-09;
 par.GLOBAL = struct;
 par.GLOBAL.distribution = "normal";
-par.GLOBAL.sigma = 10e-9;
-par.corners = [-20e-9,20e-9];
+par.GLOBAL.sigma = 5e-9;
 stat_parameters{2} = par;
 
 ### OTHER PROPERTIES ###
