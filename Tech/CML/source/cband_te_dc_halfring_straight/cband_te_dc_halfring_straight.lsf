@@ -79,22 +79,6 @@ par.test_max = 0.23e-6;
 parameters{2} = par;
 
 par = struct;
-par.name = "radius";
-par.category = "Ring";
-par.type = "Number";
-par.kind = "Distance";
-par.unit = "um";
-par.min = 0e-6;
-par.max = 10000e-6;
-par.choices = "";
-par.annotate = true;
-par.default_value = 18e-6;
-par.visible_to_user = true;
-par.test_min = 10e-6;
-par.test_max = 20e-6;
-parameters{3} = par;
-
-par = struct;
 par.name = "gap";
 par.category = "Ring";
 par.type = "Number";
@@ -108,6 +92,22 @@ par.default_value = 0.2e-6;
 par.visible_to_user = true;
 par.test_min = 0.18e-6;
 par.test_max = 0.22e-6;
+parameters{3} = par;
+
+par = struct;
+par.name = "radius";
+par.category = "Ring";
+par.type = "Number";
+par.kind = "Distance";
+par.unit = "um";
+par.min = 0e-6;
+par.max = 10000e-6;
+par.choices = "";
+par.annotate = true;
+par.default_value = 18e-6;
+par.visible_to_user = true;
+par.test_min = 10e-6;
+par.test_max = 20e-6;
 parameters{4} = par;
 
 par = struct;

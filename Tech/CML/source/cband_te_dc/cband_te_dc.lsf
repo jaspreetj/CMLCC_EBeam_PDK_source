@@ -45,55 +45,7 @@ spar_filename = "cband_te_dc_s_params.txt"; #S-parameter
 #   Example:
 #       temperature = 300;
 
-parameters = cell(4);
-
-par = struct;
-par.name = "wg_width";
-par.category = "Coupler";
-par.type = "Number";
-par.kind = "Distance";
-par.unit = "um";
-par.min = 0.1e-6;
-par.max = 10e-6;
-par.choices = "";
-par.annotate = true;
-par.default_value = 0.5e-6;
-par.visible_to_user = true;
-par.test_min = 0.5e-6;
-par.test_max = 1e-6;
-parameters{1} = par;
-
-par = struct;
-par.name = "gap";
-par.category = "Coupler";
-par.type = "Number";
-par.kind = "Distance";
-par.unit = "um";
-par.min = 0e-6;
-par.max = 10000e-6;
-par.choices = "";
-par.annotate = true;
-par.default_value = 0.2e-6;
-par.visible_to_user = true;
-par.test_min = 0.18e-6;
-par.test_max = 0.22e-6;
-parameters{2} = par;
-
-par = struct;
-par.name = "radius";
-par.category = "Coupler";
-par.type = "Number";
-par.kind = "Distance";
-par.unit = "um";
-par.min = 0e-6;
-par.max = 10000e-6;
-par.choices = "";
-par.annotate = true;
-par.default_value = 5e-6;
-par.visible_to_user = true;
-par.test_min = 4e-6;
-par.test_max = 6e-6;
-parameters{3} = par;
+parameters = cell(1);
 
 par = struct;
 par.name = "coupling_length";
@@ -109,35 +61,13 @@ par.default_value = 17.5e-6;
 par.visible_to_user = true;
 par.test_min = 15e-6;
 par.test_max = 20e-6;
-parameters{4} = par;
+parameters{1} = par;
 
 
 ### STATISTICAL PARAMETERS ###
 # Notes:
 # (1) IMPORTANT: The order of the parameters in the cell array must match the order of the data columns in the S-parameter sweep file.
 # (2) The information for each parameter must be added as a structure with the fields that describe it for Monte Carlo analysis.
-
-stat_parameters = cell(2);
-par = struct;
-par.name = "delta_thickness";
-par.mean = 0;
-par.LOCAL = struct;
-par.LOCAL.distribution = "normal";
-par.LOCAL.sigma = 5.85e-10;
-par.GLOBAL = struct;
-par.GLOBAL.distribution = "normal";
-par.GLOBAL.sigma = 3e-9;
-stat_parameters{1} = par;
-par = struct;
-par.name = "delta_width";
-par.mean = 0;
-par.LOCAL = struct;
-par.LOCAL.distribution = "normal";
-par.LOCAL.sigma = 1.132e-09;
-par.GLOBAL = struct;
-par.GLOBAL.distribution = "normal";
-par.GLOBAL.sigma = 5e-9;
-stat_parameters{2} = par;
 
 ### OTHER PROPERTIES ###
 
