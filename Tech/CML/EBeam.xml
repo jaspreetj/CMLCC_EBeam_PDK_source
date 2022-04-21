@@ -24,6 +24,26 @@
             <name>cband_tm_gc</name>
             <parameter_fileformat>lsf</parameter_fileformat>
         </element>
+        <element>
+            <name>cband_te_dc</name>
+            <parameter_fileformat>lsf</parameter_fileformat>
+        </element>
+        <element>
+            <name>cband_te_dc_halfring_straight</name>
+            <parameter_fileformat>lsf</parameter_fileformat>
+        </element>
+        <element>
+            <name>cband_te_taper</name>
+            <parameter_fileformat>lsf</parameter_fileformat>
+        </element>
+        <element>
+            <name>cband_te_terminator</name>
+            <parameter_fileformat>lsf</parameter_fileformat>
+        </element>
+        <element>
+            <name>cband_tm_terminator</name>
+            <parameter_fileformat>lsf</parameter_fileformat>
+        </element>
     </element_list>
     <statistical_data>
         <statistical_parameter_status>open</statistical_parameter_status>
