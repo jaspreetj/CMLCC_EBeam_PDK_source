@@ -11,10 +11,10 @@
 
 # Port names: We strongly recommend using the following port names.
 ports = cell(1);
-p = struct; p.name = "opt_1";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Left";   p.loc = 0.5;  ports{1} = p;
+p = struct; p.name = "opt1";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Left";   p.loc = 0.5;  ports{1} = p;
 
 
-opt_1_RELAY = 1; # Optical 1
+opt1_RELAY = 1; # Optical 1
 
 
 # Properties

@@ -13,9 +13,9 @@
 # Notes: We strongly recommend using the following port names.
 
 ports = cell(3);
-p = struct; p.name = "port_1";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Left";   p.loc = 0.5; ports{1} = p;
-p = struct; p.name = "port_2";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Right";   p.loc = 0.25; ports{2} = p;
-p = struct; p.name = "port_3";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Right";  p.loc = 0.75; ports{3} = p;
+p = struct; p.name = "opt1";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Left";   p.loc = 0.5; ports{1} = p;
+p = struct; p.name = "opt2";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Right";   p.loc = 0.25; ports{2} = p;
+p = struct; p.name = "opt3";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Right";  p.loc = 0.75; ports{3} = p;
 
 ### FOUNDRY DATA ###
 spar_filename = "cband_te_y_branch_s_params.txt"; #S-parameter for y-branch (this file does not have temperature-dependent data)
