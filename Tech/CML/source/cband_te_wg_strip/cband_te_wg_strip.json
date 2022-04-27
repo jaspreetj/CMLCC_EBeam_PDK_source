@@ -613,6 +613,6 @@
     "_size" : [ 52, 1 ],
     "_type" : "matrix"
   },
-  "width_max" : 10.0,
+  "width_max" : 10e-6,
   "width_min" : 0.0
 }
