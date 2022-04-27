@@ -486,7 +486,7 @@
       {
         "LOCAL" : 
         {
-          "CORRGROUP" : "corr_width",
+          "CORRGROUP" : "corr_delta_width",
           "distribution" : "normal",
           "sigma" : 1.132e-09
         },
@@ -498,7 +498,7 @@
       {
         "LOCAL" : 
         {
-          "CORRGROUP" : "corr_thickness",
+          "CORRGROUP" : "corr_delta_thickness",
           "distribution" : "normal",
           "sigma" : 5.8500000000000005e-10
         },
