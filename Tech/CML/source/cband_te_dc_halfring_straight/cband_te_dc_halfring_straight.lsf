@@ -19,7 +19,7 @@ p = struct; p.name = "opt3";    p.dir = "Bidirectional"; p.type = "Optical Signa
 p = struct; p.name = "opt4";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Top";   p.loc = 0.9; ports{4} = p;
 
 ### FOUNDRY DATA ###
-spar_filename = "cband_te_dc_halfring_straight_s_params.txt"; #S-parameter
+spar_filename = "cband_te_dc_halfring_straight_s_params_reciprocity.txt"; #S-parameter
                                                 # 1st parameter data column: delta_thickness
                                                 # 2nd parameter data column: delta_width
 ### PARAMETER INFORMATION ###
@@ -208,7 +208,7 @@ fir_taps = 64; # Number of taps for finite impulse response filter.
 iir_taps = 4; # Number of taps for infinite impulse response filter. 
                 # For most cases the default number of taps (4) is sufficient.  In some cases it might be necessary to use a larger value 
 passivity_enforcement = "ignore";
-reciprocity_enforcement = "ignore";
+reciprocity_enforcement = "enforce";
         
 # Testing parameters
 N_test = 1; # number of random tests, each parameter will be random.
