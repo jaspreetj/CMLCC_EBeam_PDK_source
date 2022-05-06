@@ -18,33 +18,9 @@ p = struct; p.name = "opt2";    p.dir = "Bidirectional"; p.type = "Optical Signa
 p = struct; p.name = "opt3";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Right";   p.loc = 0.25; ports{3} = p;
 p = struct; p.name = "opt4";    p.dir = "Bidirectional"; p.type = "Optical Signal";    p.pos = "Right";   p.loc = 0.75; ports{4} = p;
 
-### FOUNDRY DATA ###
-spar_filename = "cband_te_cdc_s_params.txt"; #S-parameter
-                                                # 1st parameter data column: delta_thickness
-                                                # 2nd parameter data column: delta_width
 ### PARAMETER INFORMATION ###
-# Notes:
-# (1) IMPORTANT: The order of the parameters in the cell array must match the order of the data columns in the S-parameter sweep file.
-# (2) The information for each parameter must be added as a structure with the fields that describe it (this does not apply to temperature, see note 2):
-#   Regular fields (similar to: https://kb.lumerical.com/en/index.html?ref_scripts_addproperty.html ):
-#       name: name of the property as it will appear in the Property View window
-#       category: folder where the property will be stored in the Property View window
-#       type: use "Number" for continuous numerical parameters or "ComboChoice" for discrete options
-#       kind: typically "Distance"
-#       unit: this is the default unit used in the Property View window. Depends on kind; for kind = "Distance", the options are "cm", "km", "m", "mm", "nm" and "um"
-#       min, max: minimum and maximum values allowed for the parameters. The user will be warned when trying to set a value outside this range
-#   Additional fields:
-#       choices: only required for ComboChoices, leave blank for continuous numerical parameters
-#       annotate: enable or disable annotating the parameter value in the element
-#       default_value: default value of the parameter
-#       visible_to_user: typically set to true so that the parameter is visible to the user
-#       test_min, test_max: minimum and maximum values used in the QA test. Typically the same as min and max.
-# (3) Temperature: Define the variable "temperature" ONLY IF temperature-dependent data is provided in the S-parameter file. This will use the built-in temperature
-# property in INTERCONNECT. No additional information is required.
-#   Example:
-#       temperature = 300;
 
-parameters = cell(9);
+parameters = cell(8);
 
 par = struct;
 par.name = "wg_width1";
@@ -159,20 +135,6 @@ par.test_max = 2000;
 parameters{7} = par;
 
 par = struct;
-par.name = "sinusoidal";
-par.category = "Device";
-par.type = "Logical";
-par.kind = "NonQuantity";
-par.annotate = true;
-par.choices = "";
-par.unit = "";
-par.min = 0;
-par.max = 1;
-par.default_value = 0;
-par.visible_to_user = true;
-parameters{8} = par;
-
-par = struct;
 par.name = "apodization_index";
 par.category = "Device";
 par.type = "Number";
@@ -184,15 +146,22 @@ par.unit = "";
 par.annotate = true;
 par.default_value = 2;
 par.visible_to_user = true;
-parameters{9} = par;
+parameters{8} = par;
 
 
 ### OTHER PROPERTIES ###
 
 # General
-photonic_model = "sparsweep_pcell"; # Photonic model used in the element.
+photonic_model = "compound_element"; # Photonic model used in the element.
 description = "SiEPIC EBeam element: TE C-band Contra-Directional Coupler (CDC)";	# Please give a brief description, e.g., "Grating coupler for TE mode"
 prefix = "CDC";
+
+lut_filename = "cband_te_cdc.xml";
+
+setup_script_file="cband_te_cdc_setup_script.lsf";
+feval(source_directory+"/"+setup_script_file);
+
+feval(source_directory+"/cp_spar_files.lsfx");
 
 # CML/notes		# Feel free to add notes as you see fit
 # Warning: Do not use as property the name of an existing parameter
@@ -213,51 +182,50 @@ mode_ID = [1];		# The mode IDs must be consistent across your CML
 mode_label = cell(mode_no);
 mode_label{1} = 'TE'; 
 
-##################################################################
+# Determine where to get the compound information
+get_compound="script" ; # "script" or "file" 
+debug_mode=false;
 
-### ADVANCED SETTINGS ###
-digital_filter_type = 'FIR';  # 'FIR' filter type should be used where phase information is important
-                              # 'IIR' can be used in cases where phase is not important but transmission is freqeuncy dependent
-number_of_taps_estimation = "group delay";
-fir_taps = 64; # Number of taps for finite impulse response filter. 
-                # Larger number allows to resolve frequency dependence better but increases time delay.
-                # Suggestion: set to ~64 for devices where dispersive properties are important
-                # set to ~1 for devices that will be used in circuits where time delays are a concern 
-iir_taps = 4; # Number of taps for infinite impulse response filter. 
-                # For most cases the default number of taps (4) is sufficient.  In some cases it might be necessary to use a larger value 
-passivity_enforcement = "ignore";
-reciprocity_enforcement = "ignore";
-        
-# Testing parameters
-N_test = 1; # number of random tests, each parameter will be random.
 
-test_all_combo = true; # when true, tests are run over all combinations of choices for the ComboChoice and Logical parameters
-                       # when false, Combochoice values are randomly sampled over
-reference_data_available = false; # when false, reference data is generated. Only need to do this once.
+# internal circuit
+elements=cell(1);
 
-power_tolerance_dB = 1e-6; #dB
-S_tolerance = 1e-5; # dimensionless looks at |S-S_ref| in absolute terms, phase will matter!
-reciprocity_tolerance = 1e-2; # dimensionless
-passivity_tolerance = 5e-3; # dimensionless
-S_time_tolerance = 0.2; # time domain difference with frequency domain over middle bandwidth
-time_domain_test = true;
+elements{1}=struct;
+elements{1}.element="Optical N Port S-Parameter";
+elements{1}.name="SPAR_1";
+elements{1}.property=cell(3);
+elements{1}.property{1}=struct;
+elements{1}.property{1}.name="load from file";
+elements{1}.property{1}.value=true;
+elements{1}.property{2}=struct;
+elements{1}.property{2}.name="s parameters filename";
+elements{1}.property{2}.value=source_directory+"/w1=440,w2=560,dW1=24,dW2=48,gap=100,p=318,N=1000,s=0,a=2.70,l1=1500,l2=1600,ln=601.dat";
+elements{1}.property{3}=struct;
+elements{1}.property{3}.name="load from file";
+elements{1}.property{3}.value=false;
 
-test_ranges = cell(1);		# Define wavelength ranges to test over
+connection=cell(4);
 
-test_params = struct;
-test_params.wavelength_start = 1530e-9;
-test_params.wavelength_stop = 1560e-9;
-test_params.number_of_points = 1000; # if number_of_points = 1 then wavelength_start is the wavelength tested
-test_ranges{1} = test_params;
+connection{1}=struct;
+connection{1}.e1_name="SPAR_1";
+connection{1}.e1_port="port 1";
+connection{1}.e2_name="CDC";
+connection{1}.e2_port="opt1";
 
-# Statistical QA settings
-# Monte Carlo simulation of abs(transmission)^2 from input to output ports at the wavelength specified below. 
-enable_stat_qa = true;
-stat_reference_data_available = false; # when false, reference data is generated. Only need to do this once.
-N_trials = 50; # number of trials in Monte Carlo sweep
+connection{2}=struct;
+connection{2}.e1_name="SPAR_1";
+connection{2}.e1_port="port 2";
+connection{2}.e2_name="CDC";
+connection{2}.e2_port="opt2";
 
-stat_qa_input_port = 1; # input port for Monte Carlo simulation test
-stat_qa_output_port = 2; # output port for Monte Carlo simulation test
-stat_qa_wavelength = 1550e-9; # wavelength for Monte Carlo simulation test
+connection{3}=struct;
+connection{3}.e1_name="SPAR_1";
+connection{3}.e1_port="port 3";
+connection{3}.e2_name="CDC";
+connection{3}.e2_port="opt3";
 
-stat_transmission_tolerance = 0.001; # Unitless. Tolerance is for abs(transmission)^2. 
+connection{4}=struct;
+connection{4}.e1_name="SPAR_1";
+connection{4}.e1_port="port 4";
+connection{4}.e2_name="CDC";
+connection{4}.e2_port="opt4";

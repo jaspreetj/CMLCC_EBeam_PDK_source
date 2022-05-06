@@ -1,0 +1,53 @@
+
+{
+  "stat_parameters" : 
+  {
+    "_data" : 
+    [
+      
+      {
+        "LOCAL" : 
+        {
+          "distribution" : "normal",
+          "sigma" : 1.132e-09,
+          "CORRGROUP" : "corr_delta_width"
+        },
+        "GLOBAL" : 
+        {
+          "GLOBALGROUP" : "global_delta_width"
+        },
+        "corners" : 
+        {
+          "_complex" : false,
+          "_data" : [ -15e-9, 15e-9 ],
+          "_size" : [ 2, 1 ],
+          "_type" : "matrix"
+        },
+        "mean" : 0,
+        "name" : "delta_width"
+      },
+      {
+        "LOCAL" : 
+        {
+          "distribution" : "normal",
+          "sigma" : 0.585e-9,
+          "CORRGROUP" : "corr_delta_thickness"
+        },
+        "GLOBAL" : 
+        {
+          "GLOBALGROUP" : "global_delta_thickness"
+        },
+        "corners" : 
+        {
+          "_complex" : false,
+          "_data" : [ -9e-9, 9e-9 ],
+          "_size" : [ 2, 1 ],
+          "_type" : "matrix"
+        },
+        "mean" : 0,
+        "name" : "delta_thickness"
+      }
+    ],
+    "_type" : "cell"
+  }
+}

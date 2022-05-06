@@ -1,0 +1,57 @@
+##################################################################
+
+# Copyright (c) 2003-2020, Ansys, Inc. All rights reserved.  
+
+# Unauthorized use, distribution, or duplication is prohibited.  
+# This product is subject to U.S. laws governing export and re-export.  
+
+# For full Legal Notice, see documentation.
+
+##################################################################
+
+# In this example:
+#    - Add the desired string for set-up script to the variable "setup_script"
+#    - Use command "toscript" to add data required for setup to string 
+
+setup_script ='
+
+lut_filename = %local path% + "/cband_te_cdc.xml";
+
+table = "index_table";
+
+design = cell(8);
+
+#design (input parameters)
+design{1} = struct;
+design{1}.name = "wg1_width";
+design{1}.value = wg_width1;
+design{2} = struct;
+design{2}.name = "wg2_width";
+design{2}.value = wg_width2;
+design{3} = struct;
+design{3}.name = "corrugation_width1";
+design{3}.value = corrugation_width1;
+design{4} = struct;
+design{4}.name = "corrugation_width2";
+design{4}.value = corrugation_width2;
+design{5} = struct;
+design{5}.name = "gap";
+design{5}.value = gap;
+design{6} = struct;
+design{6}.name = "grating_period";
+design{6}.value = grating_period;
+design{7} = struct;
+design{7}.name = "number_of_periods";
+design{7}.value = number_of_periods;
+design{8} = struct;
+design{8}.name = "apodization_index";
+design{8}.value = apodization_index;
+    
+setnamed("SPAR_1","load from file",1);
+s_filename = lookupread( lut_filename, table, design, "sparam" );
+s_filename = %local path% + "/" + s_filename;
+setnamed("SPAR_1","s parameters filename",s_filename); ';
+
+
+
+    

@@ -1,0 +1,50 @@
+##################################################################
+
+# Copyright (c) 2003-2020, Ansys, Inc. All rights reserved.  
+
+# Unauthorized use, distribution, or duplication is prohibited.  
+# This product is subject to U.S. laws governing export and re-export.  
+
+# For full Legal Notice, see documentation.
+
+##################################################################
+
+# In this example:
+#    - Add the desired string for set-up script to the variable "setup_script"
+#    - Use command "toscript" to add data required for setup to string 
+
+setup_script=setup_script + toscript(stat_parameters);
+setup_script = setup_script + '
+
+# Waveguide width with stat_parameters
+waveguide_width = wg_width + delta_width;  # [m]
+waveguide_height = wg_thickness + delta_thickness;
+
+filename = %local path% + "/te_ebeam_dc_halfring_straight.xml";
+
+table = "point_coupler";
+design = cell(5);
+design{1} = struct;
+design{1}.name = "width";
+design{1}.value = waveguide_width;
+design{2} = struct;
+design{2}.name = "thickness";
+design{2}.value = waveguide_height;
+design{3} = struct;
+design{3}.name = "gap";  
+design{3}.value = gap; 
+design{4} = struct;
+design{4}.name = "radius";  
+design{4}.value = radius;
+design{5} = struct;
+design{5}.name = "CoupleLength";  
+design{5}.value = Lc;
+    
+M = lookupreadnportsparameter( filename, table, design, "s-param" );
+# set s-parameter to a S Parameter element
+setvalue("SPAR_1","s parameters",M);';
+
+
+
+
+    
